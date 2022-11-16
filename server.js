@@ -13,6 +13,14 @@ import { config, SITE_NAME, PORT } from './config.js'
 // ===================================
 const app = express();
 
+// express template engines
+// ===============================
+app.set('view engine');
+
+
+// Middleware
+// =================================
+
 // routes 
 // ===================================
 app.get('/', (req, res) => {
