@@ -5,7 +5,12 @@ import session from "express-session";
 import path from 'path';
 
 // local modules
-// import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+
+// use local routes ...
+
+import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js"
+import routeStart from './routes/route-start.js';
+import routeUser from './routes/route-user.js';
 
 // express app environment
 // ========================================
@@ -42,12 +47,6 @@ app.get('*', (req, res, next) => {
     next();
 });
 
-
-// use local routes ...
-
-import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js"
-import routeStart from './routes/route-start.js';
-
 app.get('/', (req, res) => {
     // use ejs methor render, takes 2 params
     res.render('index', {site: SITE_NAME});
@@ -55,7 +54,9 @@ app.get('/', (req, res) => {
 
 app.use('/', routeStart);
 app.use('/start', routeStart);
-app.use('/home', routeStart)
+app.use('/home', routeStart);
+
+app.use('/user', routeUser);
 
 // static files | folders
 // ==============================

@@ -3,6 +3,10 @@ import { SITE_NAME } from '../configs.js';
 
 const router = express.Router();
 
+import connectDatabase from '../configurations/mongodb.js'
+
+let db = await connectDatabase();
+
 // render page using ejs
 router.get('/', (req, res) => {
 
