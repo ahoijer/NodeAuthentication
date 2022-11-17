@@ -5,11 +5,14 @@ import session from "express-session";
 import path from 'path';
 
 // local modules
-import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+// import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
 
 // express app environment
 // ========================================
 const app = express();
+
+app.set('view engine', 'ejs')
+
 
 // sessions
 // ========================================
@@ -40,16 +43,25 @@ app.get('*', (req, res, next) => {
 });
 
 
-// app.get("/", (req, res) => {
-//     // res.send(`Hello world ${config.SITE_NAME}`);
+// use local routes ...
 
-//     // send a file using express
-//     res.sendFile(path.resolve('./public/index.html'));
-// });
+import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js"
+import routeStart from './routes/route-start.js';
+
+app.get('/', (req, res) => {
+    // use ejs methor render, takes 2 params
+    res.render('index', {site: SITE_NAME});
+})
+
+app.use('/', routeStart);
+app.use('/start', routeStart);
+app.use('/home', routeStart)
 
 // static files | folders
 // ==============================
 app.use(express.static('./public'));
+
+
 
 // 404 not found 
 // ========================================

@@ -29,6 +29,8 @@ listen on server requests
 
 Embedded JavaScript templating | Handlebars
 
+Use VSC extension EJS languages
+
 https://ejs.co/
 
 *folder structur*
@@ -42,3 +44,26 @@ https://ejs.co/
 - about.ejs
 - user.ejs
 - .... // diverse olika filer, ex routes, login, register osv.
+
+
+### Routes
+
+- routes
+ - route-start.js
+ - route-about.js
+
+### MVC - Model View controller
+
+*folder structure*
+
+- controllers
+ - controller-user.js
+- models
+  <!-- model-user.js ... if class / schema - User.js  -->
+ - User.js
+ - UserSchema.js
+ - views
+  - user.ejs
+  - login.ejs
+  - register.ejs
+  - .....
