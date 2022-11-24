@@ -2,14 +2,26 @@
 // ========================================
 import express from "express";
 import session from "express-session";
-import path from 'path';
 
 // local modules
 import { config, SITE_NAME, PORT, SESSION_SECRET, SESSION_MAXAGE } from "./configs.js";
+import routeStart from './routes/route-start.js';
+import routeUser from './routes/route-user.js';
+
 
 // express app environment
 // ========================================
 const app = express();
+
+
+// express template engine
+// ========================================
+app.set("view engine", "ejs");
+
+
+// middleware
+// ========================================
+
 
 // sessions
 // ========================================
@@ -23,11 +35,20 @@ app.use(
 );
 
 
+
+// handle method post - request body as json 
+// if app uses upload files - route actions before this step...
+// ========================================
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+
 // routes
 // ========================================
 
 // check sessions
-// middleware - make sure using next as 3rd argument
+// make sure using next as 3rd argument
 app.get('*', (req, res, next) => {
 
     // oneliner if condition - ternary operator  ? :  ;
@@ -39,35 +60,38 @@ app.get('*', (req, res, next) => {
     next();
 });
 
+// use local routes ...
+app.use('/', routeStart);
+app.use('/start', routeStart);
+app.use('/home', routeStart);
 
-// app.get("/", (req, res) => {
-//     // res.send(`Hello world ${config.SITE_NAME}`);
+app.use('/user', routeUser);
 
-//     // send a file using express
-//     res.sendFile(path.resolve('./public/index.html'));
-// });
 
 // static files | folders
-// ==============================
-app.use(express.static('./public'));
+// ========================================
+app.use(express.static("./public"));
 
-// 404 not found 
+
+// 404 not found
 // ========================================
 app.use((req, res, next) => {
-    res.status(404).send('Sry - nothing to display');
+    res.status(404).send("Sry - nothing to display");
     next();
 });
 
-// 500 server error 
-// ======================================== 
+
+// 500 server error
+// ========================================
 app.use((err, req, res, next) => {
-
+    
     // log server error server-side
-    console.log('Error', err);
+    console.log("Error", err); 
 
-    res.status(500).send('Server error - please return later');
+    res.status(500).send("Server error - please return later");
     next();
-})
+});
+
 
 // listen on server requests
 // ========================================
