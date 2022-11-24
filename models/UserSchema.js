@@ -1,17 +1,16 @@
-// A user models: class | Schema | Mongoose | ....
-
+// A User model: class | Schema | Mongoose | ...
 import Schema from 'validate';
 
 const UserSchema = new Schema({
-    firstName: {
+    username: {
         type: String,
         required: true,
-        length:  { min: 2, max: 32 }
+        length:  { min: 2, max: 12 }
     },
-    lastName: {
+    password: {
         type: String,
         required: true,
-        length:  { min: 2, max: 32 }
+        length:  { min: 8, max: 72 }
     }
 })
 
